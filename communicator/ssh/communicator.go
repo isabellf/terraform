@@ -687,6 +687,10 @@ func BastionConnectFunc(
 			return nil, err
 		}
 
+		if tcpConn, ok := conn.(*net.TCPConn); ok {
+			tcpConn.SetKeepAlive(true)
+		}
+
 		// Wrap it up so we close both things properly
 		return &bastionConn{
 			Conn:    conn,
